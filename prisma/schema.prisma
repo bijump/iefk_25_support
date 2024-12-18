@@ -15,13 +15,13 @@ model User {
   name  String
   email String @unique
   phone String @unique
+  location String?
   
 }
 
 
 model Attendens {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  data      String
   name      String
   email     String
   phone     String

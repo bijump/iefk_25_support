@@ -18,17 +18,17 @@ export async function POST(req: Request) {
     }
 
     
-    const user = await prisma.user.create({
-      data: {
-        name,
-        email,
-        phone,
-        location,
-      },
-    });
+    // const user = await prisma.user.create({
+    //   data: {
+    //     name,
+    //     email,
+    //     phone,
+    //     location,
+    //   },
+    // });
 
     
-    return NextResponse.json(user, { status: 201 });
+    return NextResponse.json(body, { status: 201 });
   } catch (error: any) {
     console.error('Error saving user:', error);
 

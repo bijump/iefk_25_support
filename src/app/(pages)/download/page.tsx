@@ -22,7 +22,7 @@ const Page = () => {
     setLoading(true); // Start loading
 
     try {
-      const response = await fetch("https://iefk-25.vercel.app/api/get-user", {
+      const response = await fetch("https://iefk-25-support.vercel.app/api/get-user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phone }),

@@ -18,7 +18,7 @@ const HomePage = () => {
       <div className="sm:w-1/2 mt-8 sm:mt-0 flex justify-center">
       {/* <div style={{ position: 'relative', width: '100%', height: '400px' }}> */}
   <Image
-    src="/_next/static/media/fe9502_7788884ebccd45d5a5e86317b9014c7f~mv2.jpg"
+    src="/images/hero1.jpg"
     alt="Description"
     
   width={100} // The natural width of the image

@@ -8,7 +8,7 @@ const HomePage = () => {
     <div className="min-h-screen flex flex-col sm:flex-row items-center justify-center  bg-gradient-to-r from-blue-100 to-green-100 px-4 sm:px-8 py-8">
      
       <div className="sm:w-1/2 text-center sm:text-left">
-        <h1 className="text-4xl font-bold text-blue-800 mb-6">Welcome to IEKF</h1>
+        <h1 className="text-4xl font-bold text-blue-800 mb-6">Welcome to IEFK</h1>
         <p className="text-lg text-gray-700 leading-relaxed">
         The IEFK 2025 brings together global energy professionals, thought leaders, policymakers, and innovators for a three-day event showcasing Kerala’s commitment to sustainable energy and decarbonization. The event serves as a catalyst for the state’s clean energy transformation, offering a forum for collaboration, knowledge sharing, and exploring opportunities across sectors such as renewable energy, energy efficiency, sustainable technologies, and more.
         </p>

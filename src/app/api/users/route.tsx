@@ -18,14 +18,14 @@ export async function POST(req: Request) {
     }
 
     
-    // const user = await prisma.user.create({
-    //   data: {
-    //     name,
-    //     email,
-    //     phone,
-    //     location,
-    //   },
-    // });
+    const user = await prisma.user.create({
+       data: {
+         name,
+         email,
+         phone,
+         location,
+       },
+     });
 
     
     return NextResponse.json(body, { status: 201 });

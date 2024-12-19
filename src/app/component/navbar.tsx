@@ -26,9 +26,9 @@ const Navbar = () => {
     src="/_next/static/media/IEFK25- Logo png (1).687209c4.avif"
     alt="IEFK Logo"
     
-  width={200} // The natural width of the image
-  height={100} // The natural height of the image
-  layout="responsive" // or 'cover', based on your layout needs
+  width={200} 
+  height={100} 
+  layout="responsive" 
   />
 
         </a>
@@ -69,18 +69,20 @@ const Navbar = () => {
             isOpen ? "flex" : "hidden"
           }`}
         >
-          <Link href="/download">
-   download
-</Link>
-
-          {/* {Admin && (
-            <a
-              href="/component/scan"
+          <a
+              href="/registration"
               className="block py-2 px-4 sm:py-0 sm:px-0 hover:bg-gray-700 rounded sm:hover:bg-transparent"
             >
-              Scan
+              Registration
             </a>
-          )} */}
+
+          <Link href="/download">
+   Download
+</Link>
+
+          
+            
+          
         </div>
       </div>
     </nav>

@@ -15,11 +15,11 @@ const Page = () => {
   const [error, setError] = useState("");
   const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
   const [qrCode, setQrCode] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false); // Loading state
+  const [loading, setLoading] = useState(false); 
 
   const handleDownloadPDF = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true); // Start loading
+    setLoading(true); 
 
     try {
       const response = await fetch("https://iefk-25-support.vercel.app/api/get-user", {
@@ -32,7 +32,7 @@ const Page = () => {
         const data = await response.json();
         setUserDetails(data);
 
-        // Generate QR Code
+        
         const qrData = `https://userdetials.com/detials?name=${encodeURIComponent(
           data.name
         )}&email=${encodeURIComponent(data.email)}&phone=${encodeURIComponent(
@@ -41,7 +41,7 @@ const Page = () => {
         const qrCodeUrl = await QRCode.toDataURL(qrData);
         setQrCode(qrCodeUrl);
 
-        // Delay PDF generation
+        
         setTimeout(async () => {
           const element = document.getElementById("pdf-content");
           if (element) {
@@ -53,7 +53,7 @@ const Page = () => {
               jsPDF: {
                 unit: "cm",
                 format: [14.8, 10.5] as [number, number],
-                orientation: "portrait",
+                orientation: "portrait" as "portrait" | "landscape"
               },
             };
             html2pdf(element).set(options).save();
@@ -75,7 +75,7 @@ const Page = () => {
       setUserDetails(null);
       setQrCode(null);
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false); 
     }
   };
 
@@ -111,14 +111,14 @@ const Page = () => {
             </button>
           </form>
 
-          {/* Error Display */}
+          
           {error && (
             <div className="mt-4 p-2 bg-red-100 text-red-600 border border-red-400 rounded">
               {error}
             </div>
           )}
 
-          {/* User Details and QR Code */}
+         
           {userDetails && (
             <div
               id="pdf-content"

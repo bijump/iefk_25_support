@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import html2pdf from "html2pdf.js";
 import logo from "../../../images/IEFK25- Logo png (1).avif";
 
 const IdCard = () => {
@@ -25,10 +24,11 @@ const IdCard = () => {
     }
   }, [phone]);
 
-  const downloadPDF = () => {
+  const downloadPDF = async () => {
     if (!userDetails) return;
 
     const element = document.getElementById("id-card-content");
+    const html2pdf = (await import("html2pdf.js")).default;
     const options = {
       filename: "ID_Card.pdf",
       image: { type: "png" },

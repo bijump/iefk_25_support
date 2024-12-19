@@ -1,9 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import logo from "../../../images/IEFK25- Logo png (1).avif";
 
-const IdCard = () => {
+const IdCard = () => { 
   const [userDetails, setUserDetails] = useState<any>(null);
   const searchParams = useSearchParams();
   const phone = searchParams.get("phone");
@@ -86,4 +86,12 @@ const IdCard = () => {
   );
 };
 
-export default IdCard;
+const IdPage = () => {
+  return (
+      <Suspense>
+          <IdCard />
+      </Suspense>
+  )
+}
+
+export default IdPage

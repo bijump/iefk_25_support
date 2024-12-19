@@ -29,11 +29,12 @@ const IdCard = () => {
 
     const element = document.getElementById("id-card-content");
     const html2pdf = (await import("html2pdf.js")).default;
+    let ids: [number,number] = [90,150];
     const options = {
       filename: "ID_Card.pdf",
       image: { type: "png" },
       html2canvas: { scale: 2 },
-      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" as "portrait" | "landscape" },
+      jsPDF: { unit: "mm", format: ids, orientation: "portrait" as "portrait" | "landscape" },
     };
 
     html2pdf().from(element!).set(options).save();

@@ -3,8 +3,12 @@ import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import logo from "../../../images/IEFK25- Logo png (1).avif";
 
+import QRCode from "qrcode";
+import Image from 'next/image'
+
 const IdCard = () => { 
   const [userDetails, setUserDetails] = useState<any>(null);
+  const [qrCode, setQrCode] = useState<string | null>(null);
   const searchParams = useSearchParams();
   const phone = searchParams.get("phone");
 
@@ -15,6 +19,12 @@ const IdCard = () => {
         if (response.ok) {
           const data = await response.json();
           setUserDetails(data);
+
+          
+          const qrData = `Name: ${data.name}\nEmail: ${data.email}\nPhone No: ${data.phone}\nLocation: ${data.location} `;
+
+const qrCodeUrl = await QRCode.toDataURL(qrData);
+setQrCode(qrCodeUrl);
         } else {
           alert("User not found.");
         }
@@ -42,34 +52,59 @@ const IdCard = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <div className="bg-green-200 p-8 rounded shadow-md w-full max-w-md">
+      <div className="bg-red-200 p-8 rounded shadow-md w-full max-w-md">
         <h1 className="text-2xl font-bold text-center mb-6">ID Card</h1>
         
         {userDetails ? (
           <div
             id="id-card-content"
-            className="bg-red-700 text-white font-bold rounded p-4"
+            className="bg-green-500 text-white font-bold rounded p-4"
             style={{
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               flexDirection: "column",
               color: "#ffd700",
+              border:'3px solid #00fe9b'
+              
+              
             }}
           >
-            <div className="w-full h-[100px] rounded bg-blue-200 flex justify-center items-center mb-[20px]">
-          <img
-            src={logo.src}
-            alt="logo"
-            style={{ height: "100px", width: "100px" }}
-          />
-        </div>
-            <div>
+            <div className="w-full h-[180px] rounded bg-green-700 flex justify-around items-center mb-[20px] " style={{border:'3px solid #00fe9b'}}>
+              <div className="flex h-[100px] w-[100px] bg-white flex justify-center items-center " style={{borderRadius:'50%',border:'3px solid #00fe9b'}}>
+                <img
+                  src={logo.src}
+                  
+                  alt="logo"
+                  style={{ height: "75px", width: "75px" }}
+                />
+              </div>
+              
+            </div>
+            <div className="bg-green-700 w-[100%] rounded" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',border:'3px solid #00fe9b' }}>
               <p>Name: {userDetails.name}</p>
               <p>Phone: {userDetails.phone}</p>
               <p>Email: {userDetails.email}</p>
               <p>Place: {userDetails.location}</p>
             </div>
+
+            {qrCode && (
+              <div
+                className="qr-code-container"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  marginTop: "10px",
+                  border:'3px solid #00fe9b'
+                }}
+              >
+                <img
+                  src={qrCode}
+                  alt="QR Code"
+                  style={{ width: "150px", height: "150px" }}
+                />
+              </div>
+            )}
           </div>
         ) : (
           <p>Loading...</p>
@@ -92,7 +127,7 @@ const IdPage = () => {
       <Suspense>
           <IdCard />
       </Suspense>
-  )
+  );
 }
 
-export default IdPage
+export default IdPage;

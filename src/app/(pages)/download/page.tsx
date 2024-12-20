@@ -8,6 +8,7 @@ interface UserDetails {
   name: string;
   email: string;
   phone: string;
+  location:string
 }
 
 const Page = () => {
@@ -33,11 +34,8 @@ const Page = () => {
         setUserDetails(data);
 
         
-        const qrData = `https://userdetials.com/detials?name=${encodeURIComponent(
-          data.name
-        )}&email=${encodeURIComponent(data.email)}&phone=${encodeURIComponent(
-          data.phone
-        )}`;
+        const qrData = `Name: ${data.name}\nEmail: ${data.email}\nPhone No: ${data.phone}\nLocation: ${data.location} `;
+        
         const qrCodeUrl = await QRCode.toDataURL(qrData);
         setQrCode(qrCodeUrl);
 
@@ -45,18 +43,17 @@ const Page = () => {
         setTimeout(async () => {
           const element = document.getElementById("pdf-content");
           if (element) {
+
             const html2pdf = (await import("html2pdf.js")).default;
-            const options = {
-              margin: 0.5,
-              filename: `${data.name}-${data.phone}-details.pdf`,
-              html2canvas: { scale: 1 },
-              jsPDF: {
-                unit: "cm",
-                format: [14.8, 10.5] as [number, number],
-                orientation: "portrait" as "portrait" | "landscape"
-              },
-            };
-            html2pdf(element).set(options).save();
+    let ids: [number,number] = [90,150];
+    const options = {
+      filename: "ID_Card.pdf",
+      image: { type: "png" },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "mm", format: ids, orientation: "portrait" as "portrait" | "landscape" },
+    };
+
+    html2pdf().from(element!).set(options).save();
           } else {
             console.error("PDF content element not found");
           }
@@ -121,70 +118,55 @@ const Page = () => {
          
           {userDetails && (
             <div
-              id="pdf-content"
-              className="mt-6 p-6 border rounded-lg"
-              style={{
-                background:
-                  "linear-gradient(90deg, rgba(198,225,196,1) 16%, rgb(82, 203, 34) 90%, rgb(107, 252, 49) 100%)",
-              }}
-            >
-              <h2
-                className="text-2xl font-bold text-gray-800 text-center mb-6"
+            id="pdf-content"
+            className="bg-green-500 text-white font-bold rounded p-4"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "column",
+              color: "#ffd700",
+              border:'3px solid #00fe9b'
+              
+              
+            }}
+          >
+            <div className="w-full h-[180px] rounded bg-green-700 flex justify-around items-center mb-[20px] " style={{border:'3px solid #00fe9b'}}>
+              <div className="flex h-[100px] w-[100px] bg-white flex justify-center items-center " style={{borderRadius:'50%',border:'3px solid #00fe9b'}}>
+                <img
+                  src={logo.src}
+                  
+                  alt="logo"
+                  style={{ height: "75px", width: "75px" }}
+                />
+              </div>
+              
+            </div>
+            <div className="bg-green-700 w-[100%] rounded" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',border:'3px solid #00fe9b' }}>
+              <p>Name: {userDetails.name}</p>
+              <p>Phone: {userDetails.phone}</p>
+              <p>Email: {userDetails.email}</p>
+              <p>Place: {userDetails.location}</p>
+            </div>
+
+            {qrCode && (
+              <div
+                className="qr-code-container"
                 style={{
                   display: "flex",
-                  alignItems: "center",
                   justifyContent: "center",
+                  marginTop: "10px",
+                  border:'3px solid #00fe9b'
                 }}
               >
                 <img
-                  src={logo.src}
-                  alt="logo"
-                  style={{ height: "100px", width: "100px" }}
+                  src={qrCode}
+                  alt="QR Code"
+                  style={{ width: "150px", height: "150px" }}
                 />
-              </h2>
-
-              <div
-                className="text-gray-700"
-                style={{
-                  color: "black",
-                  border: "1px solid black",
-                  borderRadius: "5px",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  backgroundColor: "white",
-                  marginBottom: "20px",
-                  padding: "5px",
-                }}
-              >
-                <p className="mb-2">
-                  <strong>Name:</strong> {userDetails.name}
-                </p>
-                <p className="mb-2">
-                  <strong>Email:</strong> {userDetails.email}
-                </p>
-                <p className="mb-2">
-                  <strong>Phone:</strong> {userDetails.phone}
-                </p>
               </div>
-
-              {qrCode && (
-                <div
-                  className="qr-code-container"
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    marginTop: "10px",
-                  }}
-                >
-                  <img
-                    src={qrCode}
-                    alt="QR Code"
-                    style={{ width: "150px", height: "150px" }}
-                  />
-                </div>
-              )}
-            </div>
+            )}
+          </div>
           )}
         </div>
       </div>

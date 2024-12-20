@@ -21,11 +21,11 @@ const HomePage = () => {
     src="/images/hero1.jpg"
     alt="Description"
     
-  width={100} // The natural width of the image
-  height={400} // The natural height of the image
-  layout="responsive"// or 'contain' based on your layout needs
+  width={100} 
+  height={400} 
+  layout="responsive"
   />
-{/* </div> */}
+
         </div>
     </div>
   );

@@ -119,20 +119,21 @@ const Page = () => {
           {userDetails && (
             <div
             id="pdf-content"
-            className="bg-green-500 text-white font-bold rounded p-4"
+            className="bg-white  text-white font-bold rounded p-4"
             style={{
               display: "flex",
+              height:'567px',
               alignItems: "center",
               justifyContent: "center",
               flexDirection: "column",
-              color: "#ffd700",
-              border:'3px solid #00fe9b'
+              color: "black",
+              border:'3px solid #00ffff'
               
               
             }}
           >
-            <div className="w-full h-[180px] rounded bg-green-700 flex justify-around items-center mb-[20px] " style={{border:'3px solid #00fe9b'}}>
-              <div className="flex h-[100px] w-[100px] bg-white flex justify-center items-center " style={{borderRadius:'50%',border:'3px solid #00fe9b'}}>
+            <div className="w-full h-[170px] rounded bg-blue-200 flex justify-around items-center mb-[20px] " style={{border:'3px solid #00ffff'}}>
+              <div className="flex h-[100px] w-[100px] bg-white flex justify-center items-center " style={{borderRadius:'50%',border:'3px solid #00ffff'}}>
                 <img
                   src={logo.src}
                   
@@ -142,7 +143,7 @@ const Page = () => {
               </div>
               
             </div>
-            <div className="bg-green-700 w-[100%] rounded" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',border:'3px solid #00fe9b' }}>
+            <div className="bg-blue-200 w-[100%] rounded" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',border:'3px solid #00ffff' }}>
               <p>Name: {userDetails.name}</p>
               <p>Phone: {userDetails.phone}</p>
               <p>Email: {userDetails.email}</p>
@@ -156,7 +157,7 @@ const Page = () => {
                   display: "flex",
                   justifyContent: "center",
                   marginTop: "10px",
-                  border:'3px solid #00fe9b'
+                 border:'3px solid #00ffff'
                 }}
               >
                 <img

@@ -19,6 +19,14 @@ model User {
   
 }
 
+model Admin {
+
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  userid  String  @unique
+  password  String
+
+}
+
 
 model Attendens {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId

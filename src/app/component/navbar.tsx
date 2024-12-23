@@ -38,6 +38,7 @@ const Navbar = () => {
           </a>
           <Link href="/download">Download</Link>
           <Link href="/login">Login</Link>
+          <Link href="/detials">RegistrationDetials</Link>
           {isLoggedIn && (
             <Link href="/scan" className="hover:bg-gray-700 py-2 px-4 rounded-lg">
               Scan
@@ -97,6 +98,12 @@ const Navbar = () => {
             className="block py-2 px-4 w-full text-left hover:bg-gray-700 rounded"
           >
             Login
+          </Link>
+          <Link
+            href="/detials"
+            className="block py-2 px-4 w-full text-left hover:bg-gray-700 rounded"
+          >
+            RegistrationDetials
           </Link>
           {isLoggedIn && (
             <Link

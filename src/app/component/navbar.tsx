@@ -4,12 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
-  
   useEffect(() => {
     const userLoggedIn = localStorage.getItem("isLoggedIn") === "true";
     setIsLoggedIn(userLoggedIn);
@@ -17,7 +16,8 @@ const Navbar = () => {
 
   return (
     <nav className="custom-gradient text-white px-4 sm:px-8">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <div className="max-w-7xl mx-auto flex items-center justify-between py-4">
+        
         <a href="/component/home">
           <Image
             src="/_next/static/media/IEFK25- Logo png (1).687209c4.avif"
@@ -28,8 +28,29 @@ const Navbar = () => {
           />
         </a>
 
+        
+        <div className="hidden sm:flex sm:items-center sm:space-x-6">
+          <a
+            href="/registration"
+            className="hover:bg-gray-700 py-2 px-4 rounded-lg"
+          >
+            Registration
+          </a>
+          <Link href="/download">Download</Link>
+          <Link href="/login">Login</Link>
+          {isLoggedIn && (
+            <Link href="/scan" className="hover:bg-gray-700 py-2 px-4 rounded-lg">
+              Scan
+            </Link>
+          )}
+        </div>
+
+        
         <div className="sm:hidden">
-          <button onClick={toggleMenu} className="text-white focus:outline-none">
+          <button
+            onClick={toggleMobileMenu}
+            className="text-white focus:outline-none"
+          >
             <svg
               className="w-6 h-6"
               fill="none"
@@ -38,7 +59,7 @@ const Navbar = () => {
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
-              {isOpen ? (
+              {isMobileMenuOpen ? (
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -54,33 +75,39 @@ const Navbar = () => {
             </svg>
           </button>
         </div>
+      </div>
 
-        <div
-          className={`flex-col sm:flex-row sm:flex sm:items-center sm:space-x-6 ${
-            isOpen ? "flex" : "hidden"
-          }`}
-        >
+      
+      {isMobileMenuOpen && (
+        <div className="sm:hidden flex flex-col items-start space-y-4 mt-4 px-4">
           <a
             href="/registration"
-            className="block py-2 px-4 sm:py-0 sm:px-0 hover:bg-gray-700 rounded sm:hover:bg-transparent"
+            className="block py-2 px-4 w-full text-left hover:bg-gray-700 rounded"
           >
             Registration
           </a>
-
-          <Link href="/download">Download</Link>
-          <Link href="/login">Login</Link>
-
-          
+          <Link
+            href="/download"
+            className="block py-2 px-4 w-full text-left hover:bg-gray-700 rounded"
+          >
+            Download
+          </Link>
+          <Link
+            href="/login"
+            className="block py-2 px-4 w-full text-left hover:bg-gray-700 rounded"
+          >
+            Login
+          </Link>
           {isLoggedIn && (
             <Link
               href="/scan"
-              className="block py-2 px-4 sm:py-0 sm:px-0 hover:bg-gray-700 rounded sm:hover:bg-transparent"
+              className="block py-2 px-4 w-full text-left hover:bg-gray-700 rounded"
             >
               Scan
             </Link>
           )}
         </div>
-      </div>
+      )}
     </nav>
   );
 };

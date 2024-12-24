@@ -14,6 +14,12 @@ const Navbar = () => {
     setIsLoggedIn(userLoggedIn);
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    setIsLoggedIn(false);
+    window.location.href = "/login"; 
+  };
+
   return (
     <nav className="custom-gradient text-white px-4 sm:px-8">
       <div className="max-w-7xl mx-auto flex items-center justify-between py-4">
@@ -30,18 +36,30 @@ const Navbar = () => {
 
         
         <div className="hidden sm:flex sm:items-center sm:space-x-6">
-          <a
-            href="/registration"
-            className="hover:bg-gray-700 py-2 px-4 rounded-lg"
-          >
+          <a href="/registration" className="hover:bg-gray-700 py-2 px-4 rounded-lg">
             Registration
           </a>
-          <Link href="/download">Download</Link>
-          <Link href="/login">Login</Link>
-          <Link href="/detials">RegistrationDetials</Link>
-          {isLoggedIn && (
-            <Link href="/scan" className="hover:bg-gray-700 py-2 px-4 rounded-lg">
-              Scan
+          <Link href="/download" className="hover:bg-gray-700 py-2 px-4 rounded-lg">
+            Download
+          </Link>
+          {isLoggedIn ? (
+            <>
+              <Link href="/scan" className="hover:bg-gray-700 py-2 px-4 rounded-lg">
+                Scan
+              </Link>
+              <Link href="/details" className="hover:bg-gray-700 py-2 px-4 rounded-lg">
+                Registration Details
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="hover:bg-gray-700 py-2 px-4 rounded-lg"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link href="/login" className="hover:bg-gray-700 py-2 px-4 rounded-lg">
+              Login
             </Link>
           )}
         </div>
@@ -93,24 +111,33 @@ const Navbar = () => {
           >
             Download
           </Link>
-          <Link
-            href="/login"
-            className="block py-2 px-4 w-full text-left hover:bg-gray-700 rounded"
-          >
-            Login
-          </Link>
-          <Link
-            href="/detials"
-            className="block py-2 px-4 w-full text-left hover:bg-gray-700 rounded"
-          >
-            RegistrationDetials
-          </Link>
-          {isLoggedIn && (
+          {isLoggedIn ? (
+            <>
+              <Link
+                href="/scan"
+                className="block py-2 px-4 w-full text-left hover:bg-gray-700 rounded"
+              >
+                Scan
+              </Link>
+              <Link
+                href="/details"
+                className="block py-2 px-4 w-full text-left hover:bg-gray-700 rounded"
+              >
+                Registration Details
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="block py-2 px-4 w-full text-left hover:bg-gray-700 rounded"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
             <Link
-              href="/scan"
+              href="/login"
               className="block py-2 px-4 w-full text-left hover:bg-gray-700 rounded"
             >
-              Scan
+              Login
             </Link>
           )}
         </div>

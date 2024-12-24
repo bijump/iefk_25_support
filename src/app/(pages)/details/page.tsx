@@ -14,6 +14,10 @@ export default function DetailsPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
 
+  
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 50;
+
   useEffect(() => {
     async function fetchUsers() {
       try {
@@ -32,6 +36,19 @@ export default function DetailsPage() {
 
     fetchUsers();
   }, []);
+
+  const totalPages = Math.ceil(users.length / rowsPerPage);
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage > 0 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
+  };
+
+  const paginatedUsers = users.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  );
 
   if (loading) return <p className="text-center text-gray-500">Loading...</p>;
 
@@ -56,13 +73,13 @@ export default function DetailsPage() {
             </tr>
           </thead>
           <tbody>
-            {users.map((user, index) => (
+            {paginatedUsers.map((user, index) => (
               <tr
                 key={user.id}
                 className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
               >
                 <td className="border border-gray-300 px-4 py-2 text-center">
-                  {index + 1}
+                  {(currentPage - 1) * rowsPerPage + index + 1}
                 </td>
                 <td className="border border-gray-300 px-4 py-2">{user.name}</td>
                 <td className="border border-gray-300 px-4 py-2">
@@ -78,6 +95,26 @@ export default function DetailsPage() {
             ))}
           </tbody>
         </table>
+      </div>
+
+      <div className="flex justify-center items-center mt-4 space-x-2">
+        <button
+          className="px-4 py-2 bg-gray-200 text-gray-700 rounded disabled:opacity-50"
+          disabled={currentPage === 1}
+          onClick={() => handlePageChange(currentPage - 1)}
+        >
+          Previous
+        </button>
+        <span className="px-4 py-2 text-gray-700">
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          className="px-4 py-2 bg-gray-200 text-gray-700 rounded disabled:opacity-50"
+          disabled={currentPage === totalPages}
+          onClick={() => handlePageChange(currentPage + 1)}
+        >
+          Next
+        </button>
       </div>
     </div>
   );

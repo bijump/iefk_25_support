@@ -78,7 +78,7 @@ const Page = () => {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center min-h-screen bg-gradient-to-r from-blue-100 to-green-100">
+      <div className="flex flex-col justify-center items-center min-h-screen bg-gradient-to-r from-blue-200 to-green-300">
         <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
           <h1 className="text-xl font-bold text-center mb-4">Download ID Card</h1>
           <form onSubmit={handleDownloadPDF}>

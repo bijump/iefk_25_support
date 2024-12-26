@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import * as XLSX from 'xlsx';
 
 interface User {
   id: string;
@@ -14,7 +15,6 @@ export default function DetailsPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
 
-  
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 50;
 
@@ -50,6 +50,13 @@ export default function DetailsPage() {
     currentPage * rowsPerPage
   );
 
+  const exportToExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(users);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Users');
+    XLSX.writeFile(workbook, 'users.xlsx');
+  };
+
   if (loading) return <p className="text-center text-gray-500">Loading...</p>;
 
   if (users.length === 0)
@@ -61,11 +68,21 @@ export default function DetailsPage() {
       <p className="text-center text-lg mb-4">
         Registered Users: {users.length}
       </p>
+
+      <div className="flex justify-end mb-4">
+        <button
+          onClick={exportToExcel}
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          Export 
+        </button>
+      </div>
+
       <div className="overflow-x-auto">
         <table className="w-full border-collapse border border-gray-300 text-sm sm:text-base">
           <thead>
             <tr className="bg-gray-100">
-              <th className="border flex justify-center border-gray-300 px-4 py-2 text-left">NO</th>
+              <th className="border border-gray-300 px-4 py-2 text-left">NO</th>
               <th className="border border-gray-300 px-4 py-2 text-left">Name</th>
               <th className="border border-gray-300 px-4 py-2 text-left">Email</th>
               <th className="border border-gray-300 px-4 py-2 text-left">Phone</th>

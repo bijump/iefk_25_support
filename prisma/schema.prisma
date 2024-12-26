@@ -28,11 +28,12 @@ model Admin {
 }
 
 
-model Attendens {
+model Attendance {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   email     String
   phone     String
+  location  String
   createdAt DateTime @default(now())
 }
 

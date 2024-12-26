@@ -14,6 +14,8 @@ const Navbar = () => {
     setIsLoggedIn(userLoggedIn);
   }, []);
 
+  
+
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
     setIsLoggedIn(false);
@@ -105,26 +107,26 @@ const Navbar = () => {
           >
             Registration
           </a>
-          <Link
+          <a
             href="/download"
             className="block py-2 px-4 w-full text-left hover:bg-gray-700 rounded"
           >
             Download
-          </Link>
+          </a>
           {isLoggedIn ? (
             <>
-              <Link
+              <a
                 href="/scan"
                 className="block py-2 px-4 w-full text-left hover:bg-gray-700 rounded"
               >
                 Scan
-              </Link>
-              <Link
+              </a>
+              <a
                 href="/details"
                 className="block py-2 px-4 w-full text-left hover:bg-gray-700 rounded"
               >
                 Registration Details
-              </Link>
+              </a>
               <button
                 onClick={handleLogout}
                 className="block py-2 px-4 w-full text-left hover:bg-gray-700 rounded"
@@ -133,12 +135,12 @@ const Navbar = () => {
               </button>
             </>
           ) : (
-            <Link
+            <a
               href="/login"
               className="block py-2 px-4 w-full text-left hover:bg-gray-700 rounded"
             >
               Login
-            </Link>
+            </a>
           )}
         </div>
       )}

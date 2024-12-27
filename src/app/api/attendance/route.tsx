@@ -6,26 +6,53 @@ const prisma = new PrismaClient();
 export const POST = async (req: Request) => {
   try {
     const body = await req.json();
-    const { name, email, phone, location } = body;
+    const { barcodeData } = body;
 
-    // Validate required fields
-    if (!name || !email || !phone || !location) {
-      return NextResponse.json({ error: "All fields (name, email, phone, location) are required" }, { status: 400 });
+    if (!barcodeData) {
+      return NextResponse.json({ error: "Barcode data is required" }, { status: 400 });
     }
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
 
-    // Save data to the database
-    const newAttendance = await prisma.attendance.create({
-      data: {
-        name,
-        email,
-        phone,
-        location,
+    const endOfDay = new Date();
+    endOfDay.setHours(23, 59, 59, 999);
+
+    // const currentTimestamp = new Date();
+    // const localTime = new Date(
+    //   currentTimestamp.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
+    // );
+
+    
+    const existingRecord = await prisma.participants.findFirst({
+      where: {
+        data: barcodeData,
+        // scannedAt:localTime
+
+        scannedAt: {
+          gte: startOfDay,
+          lte: endOfDay,
+        },
       },
     });
 
-    return NextResponse.json({ success: true, data: newAttendance }, { status: 200 });
+    if (existingRecord) {
+      return NextResponse.json(
+        { error: "Scanned data already exists in the database" },
+        { status: 409 } 
+      );
+    }
+
+    const newBarcode = await prisma.participants.create({
+      data: {
+        
+        data: barcodeData, 
+        scannedAt: new Date(),
+      },
+    });
+
+    return NextResponse.json({ success: true, data: newBarcode }, { status: 200 });
   } catch (error) {
-    console.error("Error saving attendance data:", error);
-    return NextResponse.json({ error: "Failed to save attendance data" }, { status: 500 });
+    console.error("Error saving barcode data:", error);
+    return NextResponse.json({ error: "Failed to save barcode data" }, { status: 500 });
   }
 };

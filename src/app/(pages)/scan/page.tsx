@@ -2,10 +2,13 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { BrowserMultiFormatReader } from "@zxing/browser";
+import { toast } from "react-hot-toast";
 
 const QRCodeScannerPage = () => {
   const [barcodeData, setBarcodeData] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -17,20 +20,6 @@ const QRCodeScannerPage = () => {
           if (result) {
             setBarcodeData(result.getText());
             setError(null);
-
-            try {
-              const isUrl = /^https?:\/\/[^\s]+$/.test(result.getText());
-              console.log("Scanned Data:", result.getText());
-
-              if (isUrl) {
-                console.log("Scanned URL:", result.getText());
-              } else {
-                console.log("Scanned QR Code Data:", result.getText());
-              }
-            } catch (err) {
-              setError("Error processing barcode data.");
-              console.error(err);
-            }
           } else if (decodeError) {
             setError("No barcode detected");
           }
@@ -39,13 +28,43 @@ const QRCodeScannerPage = () => {
           console.error("Error initializing scanner:", err);
           setError("Failed to initialize scanner");
         });
-
-      // return () => {
-      //   codeReader.stop();
-        
-      // };
     }
+
+    
   }, []);
+
+  const saveData = async () => {
+    if (!barcodeData) {
+      toast.error("No data to save");
+      return;
+    }
+  
+    setSaving(true);
+  
+    try {
+      const response = await fetch("/api/attendance", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ barcodeData }),
+      });
+  
+      const result = await response.json();
+      if (response.ok) {
+        toast.success("Data saved successfully!");
+        setBarcodeData(null);
+      } else if (response.status === 409) {
+        toast.error("Data already saved for today");
+      } else {
+        toast.error(result.error || "Failed to save data");
+      }
+    } catch (err) {
+      console.error("Error saving data:", err);
+      toast.error("An error occurred while saving data");
+    } finally {
+      setSaving(false);
+    }
+  };
+  
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-100 to-green-100">
@@ -56,14 +75,24 @@ const QRCodeScannerPage = () => {
         </div>
         <div className="mt-4">
           {barcodeData ? (
-            <p className="text-green-600 font-semibold">
-              Scanned Data: <span className="text-black">{barcodeData}</span>
-            </p>
+            <>
+              <p className="text-green-600 font-semibold">
+                Scanned Data: <span className="text-black">{barcodeData}</span>
+              </p>
+              <button
+                onClick={saveData}
+                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
+                disabled={saving}
+              >
+                {saving ? "Saving..." : "Save Data"}
+              </button>
+            </>
           ) : error ? (
             <p className="text-red-600 font-semibold">{error}</p>
           ) : (
             <p className="text-gray-600">Point your camera at a QR code to scan.</p>
           )}
+          {saveSuccess && <p className="text-green-600 mt-2">{saveSuccess}</p>}
         </div>
       </div>
     </div>

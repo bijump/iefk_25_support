@@ -143,7 +143,7 @@ const Page = () => {
               </div>
               
             </div>
-            <div className="bg-blue-200 w-[100%] rounded" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',border:'3px solid #00ffff' }}>
+            <div className="bg-blue-300 h-[150px]  w-[100%] rounded" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',border:'3px solid #00ffff' }}>
               <p>Name: {userDetails.name}</p>
               <p>Phone: {userDetails.phone}</p>
               <p>Email: {userDetails.email}</p>

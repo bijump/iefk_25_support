@@ -51,10 +51,24 @@ export default function DetailsPage() {
   );
 
   const exportToExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(users);
+    
+    const dataToExport = users.map((user, index) => ({
+      No: index + 1,
+      Name: user.name,
+      Email: user.email,
+      Phone: user.phone,
+      Location: user.location ?? "Not provided",
+    }));
+  
+   
+    const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+  
+   
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Users');
-    XLSX.writeFile(workbook, 'users.xlsx');
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Users");
+  
+    
+    XLSX.writeFile(workbook, "users.xlsx");
   };
 
   if (loading) return <p className="text-center text-gray-500">Loading...</p>;

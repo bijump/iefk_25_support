@@ -37,19 +37,19 @@ const RegistrationForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+  
     const result = registrationSchema.safeParse(formData);
-
+  
     if (!result.success) {
       result.error.errors.forEach((err) => {
         toast.error(err.message);
       });
       return;
     }
-
+  
     setIsLoading(true);
-    setShowOverlay(true); 
-
+    setShowOverlay(true);
+  
     const response = await fetch("/api/register", {
       method: "POST",
       headers: {
@@ -57,17 +57,21 @@ const RegistrationForm = () => {
       },
       body: JSON.stringify(formData),
     });
-
+  
     setIsLoading(false);
-    setShowOverlay(false); 
-
+    setShowOverlay(false);
+  
     if (response.ok) {
       toast.success("Registration successful! Redirecting...");
       router.push(`/idcard?phone=${formData.phone}`);
+    } else if (response.status === 409) {
+      const data = await response.json();
+      toast.error("user already exist"); // Display conflict message
     } else {
-      toast.error("Registration failed. Please try again."); 
+      toast.error("Registration failed. Please try again.");
     }
   };
+  
 
   return (
     <div

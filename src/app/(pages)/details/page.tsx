@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import * as XLSX from 'xlsx';
 
 interface User {
@@ -14,28 +15,41 @@ interface User {
 export default function DetailsPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
-
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 50;
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
-    async function fetchUsers() {
-      try {
-        const response = await fetch('/api/detials');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setUsers(data);
-      } catch (error) {
-        console.error('Failed to fetch users:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
+    const isLogedin = localStorage.getItem('isLoggedIn') === 'true';
 
-    fetchUsers();
-  }, []);
+    if (!isLogedin) {
+      router.push('/login'); 
+    } else {
+      setIsAuthorized(true);
+    }
+  }, [router]);
+
+  useEffect(() => {
+    if (isAuthorized) {
+      async function fetchUsers() {
+        try {
+          const response = await fetch('/api/detials');
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const data = await response.json();
+          setUsers(data);
+        } catch (error) {
+          console.error('Failed to fetch users:', error);
+        } finally {
+          setLoading(false);
+        }
+      }
+
+      fetchUsers();
+    }
+  }, [isAuthorized]);
 
   const totalPages = Math.ceil(users.length / rowsPerPage);
 
@@ -51,25 +65,21 @@ export default function DetailsPage() {
   );
 
   const exportToExcel = () => {
-    
     const dataToExport = users.map((user, index) => ({
       No: index + 1,
       Name: user.name,
       Email: user.email,
       Phone: user.phone,
-      Location: user.location ?? "Not provided",
+      Location: user.location ?? 'Not provided',
     }));
-  
-   
+
     const worksheet = XLSX.utils.json_to_sheet(dataToExport);
-  
-   
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Users");
-  
-    
-    XLSX.writeFile(workbook, "users.xlsx");
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Users');
+    XLSX.writeFile(workbook, 'users.xlsx');
   };
+
+  if (!isAuthorized) return null; 
 
   if (loading) return <p className="text-center text-gray-500">Loading...</p>;
 
@@ -88,7 +98,7 @@ export default function DetailsPage() {
           onClick={exportToExcel}
           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         >
-          Export 
+          Export
         </button>
       </div>
 

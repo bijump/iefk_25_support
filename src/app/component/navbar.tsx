@@ -131,7 +131,7 @@ const Navbar = () => {
                 Registration Details
               </a>
               <a
-                href="/scaneddetails"
+                href="/scaneddetials"
                 className="block py-2 px-4 w-full text-left hover:bg-gray-700 rounded"
               >
                 Participants Details

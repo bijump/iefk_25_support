@@ -17,16 +17,13 @@ export const POST = async (req: Request) => {
     const endOfDay = new Date();
     endOfDay.setHours(23, 59, 59, 999);
 
-    // const currentTimestamp = new Date();
-    // const localTime = new Date(
-    //   currentTimestamp.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
-    // );
+    
 
     
     const existingRecord = await prisma.participants.findFirst({
       where: {
         data: barcodeData,
-        // scannedAt:localTime
+        
 
         scannedAt: {
           gte: startOfDay,

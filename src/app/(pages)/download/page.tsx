@@ -132,7 +132,7 @@ const Page = () => {
               
             }}
           >
-            <div className="w-full h-[170px] rounded bg-blue-200 flex justify-around items-center mb-[20px] " style={{border:'3px solid #00ffff'}}>
+            <div className="w-full h-[170px] rounded bg-blue-300 flex justify-around items-center mb-[20px] " style={{border:'3px solid #00ffff'}}>
               <div className="flex h-[100px] w-[100px] bg-white flex justify-center items-center " style={{borderRadius:'50%',border:'3px solid #00ffff'}}>
                 <img
                   src={logo.src}
@@ -143,11 +143,13 @@ const Page = () => {
               </div>
               
             </div>
-            <div className="bg-blue-300 h-[150px]  w-[100%] rounded" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',border:'3px solid #00ffff' }}>
+            <div className="bg-blue-300 h-[150px] w-[100%] rounded" style={{ display: 'flex', flexDirection: 'column',justifyContent:'center', alignItems: 'center',border:'3px solid #00ffff' }}>
+              <div>
               <p>Name: {userDetails.name}</p>
               <p>Phone: {userDetails.phone}</p>
               <p>Email: {userDetails.email}</p>
               <p>Place: {userDetails.location}</p>
+              </div>
             </div>
 
             {qrCode && (

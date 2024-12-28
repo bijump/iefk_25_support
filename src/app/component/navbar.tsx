@@ -38,9 +38,9 @@ const Navbar = () => {
 
         
         <div className="hidden sm:flex sm:items-center sm:space-x-6">
-          <a href="/registration" className="hover:bg-gray-700 py-2 px-4 rounded-lg">
+          <Link href="/registration" className="hover:bg-gray-700 py-2 px-4 rounded-lg">
             Registration
-          </a>
+          </Link>
           <Link href="/download" className="hover:bg-gray-700 py-2 px-4 rounded-lg">
             Download
           </Link>
@@ -51,6 +51,9 @@ const Navbar = () => {
               </Link>
               <Link href="/details" className="hover:bg-gray-700 py-2 px-4 rounded-lg">
                 Registration Details
+              </Link>
+              <Link href="/scaneddetials" className="hover:bg-gray-700 py-2 px-4 rounded-lg">
+                Scaned Details
               </Link>
               <button
                 onClick={handleLogout}
@@ -126,6 +129,12 @@ const Navbar = () => {
                 className="block py-2 px-4 w-full text-left hover:bg-gray-700 rounded"
               >
                 Registration Details
+              </a>
+              <a
+                href="/scaneddetails"
+                className="block py-2 px-4 w-full text-left hover:bg-gray-700 rounded"
+              >
+                Scanned Details
               </a>
               <button
                 onClick={handleLogout}

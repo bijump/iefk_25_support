@@ -53,7 +53,7 @@ const Navbar = () => {
                 Registration Details
               </Link>
               <Link href="/scaneddetials" className="hover:bg-gray-700 py-2 px-4 rounded-lg">
-                Participants Details
+                Participants
               </Link>
               <button
                 onClick={handleLogout}
@@ -134,7 +134,7 @@ const Navbar = () => {
                 href="/scaneddetials"
                 className="block py-2 px-4 w-full text-left hover:bg-gray-700 rounded"
               >
-                Participants Details
+                Participants 
               </a>
               <button
                 onClick={handleLogout}

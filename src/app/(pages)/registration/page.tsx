@@ -89,7 +89,7 @@ const RegistrationForm = () => {
       )}
 
       <div className="bg-blue-700 p-8 rounded shadow-md w-full max-w-md md:max-w-lg lg:max-w-xl relative z-10">
-        <h1 className="text-2xl font-bold text-center mb-6">Registration Form</h1>
+        <h1 className="text-2xl font-bold text-center text-white mb-6">Registration Form</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-white">Name</label>

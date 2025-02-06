@@ -158,7 +158,7 @@ const QRCodeScannerPage = () => {
       <div className="flex flex-col gap-[10px] items-center justify-center min-h-screen bg-gradient-to-r from-blue-100 to-green-100">
       <ToastContainer position="top-right" autoClose={3000} />
 
-        <div className='h-[500px] w-[40%] shadow-lg border bg-white '>
+        <div className='h-[500px] w-full max-w-[90%] md:max-w-[70%] lg:max-w-[40%] shadow-lg border bg-white '>
           <div className='h-[50px] w-full flex items-center justify-center gap-[40px] cursor-pointer'>
             <p
               className={selectedOption === 'phone' ? 'font-bold border-b-2 border-blue-500 ' : ''}

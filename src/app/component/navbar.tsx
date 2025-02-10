@@ -38,17 +38,10 @@ const Navbar = () => {
 
         
         <div className="hidden sm:flex sm:items-center sm:space-x-6">
-          <Link href="/registration" className="hover:bg-gray-700 py-2 px-4 rounded-lg">
-            Registration
-          </Link>
-          <Link href="/download" className="hover:bg-gray-700 py-2 px-4 rounded-lg">
-            Download
-          </Link>
+          
           {isLoggedIn ? (
             <>
-              <Link href="/scan" className="hover:bg-gray-700 py-2 px-4 rounded-lg">
-                Scan
-              </Link>
+              
               <Link href="/details" className="hover:bg-gray-700 py-2 px-4 rounded-lg">
                 Registration Details
               </Link>
@@ -104,26 +97,10 @@ const Navbar = () => {
       
       {isMobileMenuOpen && (
         <div className="sm:hidden flex flex-col items-start space-y-4 mt-4 px-4">
-          <a
-            href="/registration"
-            className="block py-2 px-4 w-full text-left hover:bg-gray-700 rounded"
-          >
-            Registration
-          </a>
-          <a
-            href="/download"
-            className="block py-2 px-4 w-full text-left hover:bg-gray-700 rounded"
-          >
-            Download
-          </a>
+          
           {isLoggedIn ? (
             <>
-              <a
-                href="/scan"
-                className="block py-2 px-4 w-full text-left hover:bg-gray-700 rounded"
-              >
-                Scan
-              </a>
+              
               <a
                 href="/details"
                 className="block py-2 px-4 w-full text-left hover:bg-gray-700 rounded"
